@@ -1,0 +1,227 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+	<script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+	<script type="text/javascript">
+		window.tailwind.config = {
+			darkMode: ['class'],
+			theme: {
+				extend: {
+					colors: {
+						border: 'hsl(var(--border))',
+						input: 'hsl(var(--input))',
+						ring: 'hsl(var(--ring))',
+						background: 'hsl(var(--background))',
+						foreground: 'hsl(var(--foreground))',
+						primary: {
+							DEFAULT: 'hsl(var(--primary))',
+							foreground: 'hsl(var(--primary-foreground))',
+						},
+						secondary: {
+							DEFAULT: 'hsl(var(--secondary))',
+							foreground: 'hsl(var(--secondary-foreground))',
+						},
+						destructive: {
+							DEFAULT: 'hsl(var(--destructive))',
+							foreground: 'hsl(var(--destructive-foreground))',
+						},
+						muted: {
+							DEFAULT: 'hsl(var(--muted))',
+							foreground: 'hsl(var(--muted-foreground))',
+						},
+						accent: {
+							DEFAULT: 'hsl(var(--accent))',
+							foreground: 'hsl(var(--accent-foreground))',
+						},
+						popover: {
+							DEFAULT: 'hsl(var(--popover))',
+							foreground: 'hsl(var(--popover-foreground))',
+						},
+						card: {
+							DEFAULT: 'hsl(var(--card))',
+							foreground: 'hsl(var(--card-foreground))',
+						},
+					},
+				},
+			},
+		};
+	</script>
+	<style type="text/tailwindcss">
+		@layer base {
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 240 10% 3.9%;
+          --card: 0 0% 100%;
+          --card-foreground: 240 10% 3.9%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 240 10% 3.9%;
+          --primary: 240 5.9% 10%;
+          --primary-foreground: 0 0% 98%;
+          --secondary: 240 4.8% 95.9%;
+          --secondary-foreground: 240 5.9% 10%;
+          --muted: 240 4.8% 95.9%;
+          --muted-foreground: 240 3.8% 46.1%;
+          --accent: 240 4.8% 95.9%;
+          --accent-foreground: 240 5.9% 10%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 0 0% 98%;
+          --border: 240 5.9% 90%;
+          --input: 240 5.9% 90%;
+          --ring: 240 5.9% 10%;
+          --radius: 0.5rem;
+        }
+        .dark {
+          --background: 240 10% 3.9%;
+          --foreground: 0 0% 98%;
+          --card: 240 10% 3.9%;
+          --card-foreground: 0 0% 98%;
+          --popover: 240 10% 3.9%;
+          --popover-foreground: 0 0% 98%;
+          --primary: 0 0% 98%;
+          --primary-foreground: 240 5.9% 10%;
+          --secondary: 240 3.7% 15.9%;
+          --secondary-foreground: 0 0% 98%;
+          --muted: 240 3.7% 15.9%;
+          --muted-foreground: 240 5% 64.9%;
+          --accent: 240 3.7% 15.9%;
+          --accent-foreground: 0 0% 98%;
+          --destructive: 0 62.8% 30.6%;
+          --destructive-foreground: 0 0% 98%;
+          --border: 240 3.7% 15.9%;
+          --input: 240 3.7% 15.9%;
+          --ring: 240 4.9% 83.9%;
+        }
+      }
+    </style>
+</head>
+
+<body class="dark">
+	<div class="flex h-screen bg-background text-foreground">
+		<aside class="w-1/4 bg-card p-6 border-r border-border shadow-lg">
+			<h2 class="text-3xl font-bold text-center mb-4">FinBuddy</h2>
+
+			<h3 class="mt-6 text-lg font-medium">Chats</h3>
+			<ul id="chatList" class="mt-2 space-y-2 overflow-y-auto max-h-72">
+				<!-- Previous chats will be listed here -->
+			</ul>
+			<button id="newChatBtn"
+				class="mt-auto bg-secondary text-secondary-foreground p-3 rounded-lg w-full hover:bg-secondary/80 transition duration-300">New
+				chat</button>
+
+			<h4 class="text-3xl font-bold text-center mb-4"></h4>
+			
+				<button  class="absolute top-6 right-6 bg-secondary text-secondary-foreground p-3 rounded-lg hover:bg-secondary/80 transition duration-300" onclick="location.href='index3.html'">Logout</button>
+		</aside>
+
+		<main class="flex-1 flex flex-col">
+			<div id="chatWindow" class="flex-1 bg-card p-8 rounded-lg shadow-xl overflow-y-auto">
+				<h1 id="chatTitle" class="text-4xl font-bold">How can I help you today?</h1>
+				<p id="chatSubtitle" class="mt-2 text-muted-foreground">This chat will display a prompt asking for the
+					user and their needs.</p>
+				<div id="chatContent" class="mt-6 space-y-4">
+					<!-- Chat messages will appear here -->
+				</div>
+			</div>
+			<div class="bg-card p-6">
+				<div class="flex items-end">
+					<input id="userInput" type="text" placeholder="Type your prompt here..."
+						class="w-full p-3 rounded-l-lg border border-border bg-input focus:outline-none focus:ring focus:ring-primary transition duration-300" />
+					<button id="sendBtn"
+						class="bg-primary text-primary-foreground p-3 rounded-r-lg hover:bg-primary/80 transition duration-300">Send</button>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<script>
+		const chatList = document.getElementById('chatList');
+		const chatWindow = document.getElementById('chatWindow');
+		const chatContent = document.getElementById('chatContent');
+		const userInput = document.getElementById('userInput');
+		const sendBtn = document.getElementById('sendBtn');
+		const newChatBtn = document.getElementById('newChatBtn');
+		const loginBtn = document.getElementById('loginBtn');
+
+		let chatHistories = [];  // Store multiple chat histories
+
+		// Function to check if user is logged in
+		function checkLoginStatus() {
+			return !!getCookie('user');  // Replace 'user' with the appropriate cookie name
+		}
+
+		// Function to get cookie value
+		function getCookie(name) {
+			const value = `; ${document.cookie}`;
+			const parts = value.split(`; ${name}=`);
+			if (parts.length === 2) return parts.pop().split(';').shift();
+		}
+
+		function addMessage(message, isUser = false) {
+			const messageElem = document.createElement('div');
+			messageElem.className = `bg-muted p-4 rounded-lg ${isUser ? 'text-card-foreground bg-card' : 'text-foreground bg-muted'}`;
+			messageElem.textContent = message;
+			chatContent.appendChild(messageElem);
+			chatWindow.scrollTop = chatWindow.scrollHeight;
+		}
+
+		function saveChat(message) {
+			const chatItem = document.createElement('li');
+			chatItem.className = 'py-2 hover:bg-muted rounded-lg transition cursor-pointer';
+			chatItem.textContent = message;
+			chatItem.addEventListener('click', () => displayChatHistory(chatHistories[chatItem.dataset.index]));
+			chatItem.dataset.index = chatHistories.length;
+			chatList.appendChild(chatItem);
+
+			chatHistories.push([...chatContent.children].map(child => child.textContent));
+		}
+
+		function displayChatHistory(chatHistory) {
+			chatContent.innerHTML = '';
+			chatHistory.forEach(message => addMessage(message, message.startsWith('User:')));
+		}
+
+		function handleSendMessage() {
+			const message = userInput.value.trim();
+			if (message) {
+				addMessage(`User: ${message}`, true);
+				saveChat(message);
+				userInput.value = '';
+		
+				// Response simulation after a delay
+				setTimeout(() => {
+					addMessage("FinBuddy: Sure! Let me provide you with some options.", false);
+				}, 1000);
+			}
+		}
+		
+		sendBtn.addEventListener('click', handleSendMessage);
+		userInput.addEventListener('keydown', (event) => {
+			if (event.key === 'Enter') {
+				handleSendMessage();
+			}
+		});
+
+		newChatBtn.addEventListener('click', () => {
+			chatContent.innerHTML = '';
+			chatTitle.textContent = "How can I help you today?";
+			chatSubtitle.textContent = "This chat will display a prompt asking for the user and their needs.";
+		});
+
+		loginBtn.addEventListener('click', () => {
+			// Redirect to the login page if not logged in
+			if (!checkLoginStatus()) {
+				window.location.href = 'login/index.php';
+			} else {
+				// Log out and redirect to login page
+				document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+				window.location.href = 'login/index.php';
+			}
+		});
+		
+	</script>
+</body>
+
+</html>

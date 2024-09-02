@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinBuddy</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+  <header class="mb-4">
+ 
+  <style>
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-image: linear-gradient(to bottom, #3498db, #2ecc71);
+    }
+
+    #authForms {
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-container {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-input {
+      margin-bottom: 20px;
+    }
+
+    .form-button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .form-button:hover {
+      background-color: #3e8e41;
+    }
+
+    .form-switch {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #passwordInput {
+      padding-right: 30px;
+      position: relative;
+    }
+
+    #passwordEye {
+      position: absolute;
+      top: 65%;
+      transform: translateY(-50%);
+      right: 10px;
+      cursor: pointer;
+      z-index: 2;
+      background-color: transparent;
+      pointer-events: auto;
+      display: block;
+      visibility: visible;
+    }
+    #passwordEye {
+  background-color: transparent;
+  pointer-events: auto;
+  display: block;
+  visibility: visible;
+}
+
+#passwordEye:hover {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#passwordEye svg {
+  fill: #666;
+}
+
+#passwordEye:hover svg {
+  fill: #333;
+}
+  </style>
+</head>
+<body>
+
+  <div id="authForms" class="flex justify-center items-center h-full">
+    <div class="form-container w-full max-w-md">
+      <div class="form-header">
+        <h2 id="authTitle" class="text-3xl font-semibold">Login</h2>
+      </div>
+      <form id="authForm">
+        <div class="form-input">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="email" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        </div>
+        <div class="form-input relative">
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input type="password" id="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+          <button type="button" id="passwordEye" class="absolute right-3 top-3 text-gray-400 hover:text-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="form-button">
+            <button type="submit" id="authButton" class="form-button" href="chat2.html">Login</button>
+          </div>
+          <div class="form-switch">
+            <p id="authSwitch" class="text-sm text-gray-400">Don't have an account? <a href="#" id="switchToSignup" class="text-indigo-400 hover:text-indigo-300">Sign up here</a>.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <script>
+      
+      const passwordEye = document.querySelector('#passwordEye');
+      const passwordInput = document.querySelector('#password');
+  
+      passwordEye.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          passwordEye.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-14-14a1 1 0 00-1.414-1.414z" clip-rule="evenodd" />
+              <path fill-rule="evenodd" d="M6.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+            </svg>
+          `;
+        } else {
+          passwordInput.type = 'password';
+          passwordEye.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+            </svg>
+          `;
+        }
+      });
+      const authForms = document.getElementById('authForms');
+        const authForm = document.getElementById('authForm');
+        const authButton = document.getElementById('authButton');
+        const authTitle = document.getElementById('authTitle');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const emailInput = document.getElementById('email');
+
+        // Check if user is logged in
+        function checkLoginStatus() {
+            if (localStorage.getItem('userEmail')) {
+                authForms.classList.add('hidden');
+            } else {
+                authForms.classList.remove('hidden');
+            }
+        }
+
+        // Handle login and signup switch
+        switchToSignup.addEventListener('click', () => {
+            if (authTitle.textContent === 'Login') {
+                authTitle.textContent = 'Sign Up';
+                authButton.textContent = 'Sign Up';
+                switchToSignup.textContent = 'Already have an account? Login here';
+            } else {
+                authTitle.textContent = 'Login';
+                authButton.textContent = 'Login';
+                switchToSignup.textContent = 'Don\'t have an account? Sign up here';
+            }
+        });
+
+        // Handle form submission
+        authForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            if (authTitle.textContent === 'Sign Up') {
+                // Store email and password
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userPassword', password);
+                alert('Signup successful! Please login.');
+                authTitle.textContent = 'Login';
+                authButton.textContent = 'Login';
+                switchToSignup.textContent = 'Don\'t have an account? Sign up here';
+            } else {
+                // Simulate authentication
+                if (email === localStorage.getItem('userEmail') && password === localStorage.getItem('userPassword')) {
+                    // Open chat interface in a new window
+   
+                    window.location.href = 'FinBuddy (3).html';
+                } else {
+                    alert('Invalid email or password.');
+                }
+            }
+            
+    return false;
+        });
+
+        // Initialize page state
+        checkLoginStatus();
+</script>
+</body>
+
+</html>
